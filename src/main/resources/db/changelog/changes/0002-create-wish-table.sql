@@ -1,10 +1,8 @@
 --liquibase formatted sql
 
---changeset dagnis:1
+--changeset dagnis:2
 
-DROP TABLE IF EXISTS wish;
-
-CREATE TABLE wish
+CREATE TABLE if not exists wish
 (
     wish_id SERIAL PRIMARY KEY,
     wish    VARCHAR NOT NULL

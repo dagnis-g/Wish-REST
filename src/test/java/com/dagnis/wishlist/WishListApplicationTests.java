@@ -41,7 +41,7 @@ class WishListApplicationTests {
         Wish wish1 = wishController.addWish("wish1");
         Wish wish2 = wishController.addWish("wish2");
 
-        Assertions.assertEquals(wish1.getWishId(), wish2.getWishId() - 1);
+        Assertions.assertNotEquals(wish1.getWishId(), wish2.getWishId());
     }
 
     @Test

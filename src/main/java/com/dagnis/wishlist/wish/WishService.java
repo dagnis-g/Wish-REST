@@ -18,12 +18,12 @@ public class WishService {
 
     public Wish addWish(String wishText) {
         if (wishRepository.existsByWishTextIgnoreCase(wishText)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Wish already exists in db");
         }
         try {
             return wishRepository.save(new Wish(wishText));
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't add empty wish");
         }
     }
 
@@ -33,7 +33,7 @@ public class WishService {
             wishToUpdate.setWishText(wishText);
             return wishRepository.save(wishToUpdate);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't update wish with empty wish");
         }
 
     }
@@ -42,14 +42,14 @@ public class WishService {
         try {
             wishRepository.deleteById(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wish to delete not found");
         }
     }
 
     public Wish getWishById(Long id) {
         Optional<Wish> wish = wishRepository.findById(id);
         if (wish.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No wish found by Id");
         }
         return wish.get();
     }
